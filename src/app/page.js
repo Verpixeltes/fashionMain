@@ -70,7 +70,7 @@ export default function Home() {
                         </div>
 
 
-                        <div className="w-full h-full flex flex-col items-center border-solid border-black border-2 ">
+                        <div className="w-full h-full flex flex-col items-center ">
                             <span id="service-section"
                                   className="text-sm text-white tracking-[5px] absolute mr-[80%] mt-[8%] font-Outfit">Service</span>
                             <p className={"text-white font-Outfit text-4xl mr-[54%] mt-[10%] font-bold"}>The Fashion
