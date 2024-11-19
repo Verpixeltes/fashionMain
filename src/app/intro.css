@@ -1,0 +1,38 @@
+@keyframes popup {
+    0% {
+        transform: scale(0);
+        opacity: 0;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.intro-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+}
+
+.intro-text {
+    color: white;
+    font-size: 2rem;
+    animation: popup 2s forwards;
+}
+
+.page-content {
+    transition: opacity 2s ease-in-out;
+    opacity: 0;
+}
+
+.page-content.show {
+    opacity: 1;
+}

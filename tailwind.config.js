@@ -7,6 +7,10 @@ module.exports = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        AudioNugget: "var(--font-audio-nugget)",
+        Outfit: "var(--font-outfit)",
+      },
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",

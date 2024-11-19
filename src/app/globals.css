@@ -2,20 +2,109 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px);
   }
 }
 
+.animate-bounce {
+  animation: bounce 2s infinite;
+}
+
+
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  background-image: url('/image.webp'); /* Update with your image path */
+  background-size: cover; /* Ensure the image covers the entire background */
+  background-position: center; /* Center the image */
+  background-repeat: no-repeat;
+
+
+}
+
+html {
+  overflow-x: hidden; /* Prevent horizontal scrolling */
+}
+/* Round scrollbar styles */
+::-webkit-scrollbar {
+  width: 10px; /* Width of the scrollbar */
+  height: 10px; /* Height of the scrollbar for horizontal scrolling */
+}
+
+::-webkit-scrollbar-track {
+  background: #F4F0E5; /* Background color of the scrollbar track */
+  border-radius: 10px; /* Make track corners round */
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888; /* Color of the scrollbar thumb */
+  border-radius: 10px; /* Make thumb corners round */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555; /* Darker color on hover */
+}
+
+/* Webkit-based browsers (Chrome, Safari, Edge) */
+
+
+@keyframes slightMove {
+  0%, 100% {
+    transform: translate(-50%, -50%) translateX(0);
+  }
+  50% {
+    transform: translate(-50%, -50%) translateX(10px);
+  }
+}
+.animate-slightMove {
+  animation: slightMove 3s infinite ease-in-out;
+}
+
+
+.circle {
+  position: fixed;
+  width: 20px; /* Startgröße */
+  height: 20px; /* Startgröße */
+  background-color: transparent;
+  border-radius: 50%;
+  pointer-events: none;
+  transition: all 0.1s ease-out; /* Übergänge */
+  border: solid 1px black;
+}
+@layer utilities {
+  .text-outline-white {
+    -webkit-text-stroke: 0.5px white;
+    color: transparent;
+    letter-spacing: 0.1em; /* Increase the letter spacing */
+  }
+}
+
+/* Anfangszustand: Nur Umriss */
+.text-fill-effect {
+  -webkit-text-stroke: 1px white; /* Weißer Umriss */
+  color: transparent; /* Keine Füllung */
+  background-image: linear-gradient(to bottom, white 0%, white 0%, transparent 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  transition: background-size 0.3s ease-out; /* Geschmeidige Animation */
+  background-size: 100% 0%; /* Startzustand: Keine Füllung */
+}
+
+@keyframes textFill {
+  from {
+    background-size: 0% 100%;
+  }
+  to {
+    background-size: 100% 100%;
+  }
+}
+
+.circle.hover {
+  width: 60px; /* New size on hover */
+  height: 60px; /* New size on hover */
 }
