@@ -28,6 +28,14 @@ const ImageAI = ({ imageSrc, topText, bottomRightText }) => {
             observer.observe(imageContainer);
         }
 
+        const handleScroll = () => {
+            if (window.scrollY === 0 && imageContainer) {
+                imageContainer.classList.remove('visible');
+            }
+        };
+
+        window.addEventListener('scroll', handleScroll);
+
         const handleMouseEnter = () => {
             if (circle) {
                 circle.classList.add('hover');
@@ -51,9 +59,9 @@ const ImageAI = ({ imageSrc, topText, bottomRightText }) => {
                 imageContainer.removeEventListener('mouseenter', handleMouseEnter);
                 imageContainer.removeEventListener('mouseleave', handleMouseLeave);
             }
+            window.removeEventListener('scroll', handleScroll);
         };
     }, []);
-
     return (
         <div ref={imageContainerRef} className="image-container-ai">
             <Image src={imageSrc} alt="Selected Image" className="responsive-image-ai select-none" layout="fill" objectFit="cover" />

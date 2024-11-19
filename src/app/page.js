@@ -70,12 +70,16 @@ export default function Home() {
                         </div>
 
 
-                        <div className="w-full h-full flex flex-col items-center ">
-
+                        <div className="w-full h-full flex flex-col items-center border-solid border-black border-2 ">
+                            <span id="service-section"
+                                  className="text-sm text-white tracking-[5px] absolute mr-[80%] mt-[8%] font-Outfit">Service</span>
+                            <p className={"text-white font-Outfit text-4xl mr-[54%] mt-[10%] font-bold"}>The Fashion
+                                World is a Universe<br/>
+                                Let Us Be Your Guide to Discovering<br/>
+                                Your Style!</p>
                             <div
-                                className="w-10 h-[250px]  mr-[82%] mt-[10%] grid grid-rows-2 gap-8">
-                                <span id="service-section"
-                                      className="text-sm text-white tracking-[5px] mt-[-50px] font-Outfit">Service</span>
+                                className="w-10 h-[250px]  mr-[82%] mt-[5%] grid grid-rows-2">
+
                                 <SelectImages
                                     imageSrc={"/noland.webp"}
                                     topText="Configure your style"
