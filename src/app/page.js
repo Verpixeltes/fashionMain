@@ -6,7 +6,7 @@ import ScrollContext from "@/components/SmoothScrool";
 import FillingText from "../components/FillingText";
 import ImageEffect from "@/components/image_man_side";
 import SelectImages from "@/components/imageComponents/NoLand";
-import AiImage from "@/components/imageComponents/ai";
+import ImageAI from "@/components/imageComponents/ai";
 
 export default function Home() {
     const [isAtTop, setIsAtTop] = useState(true);
@@ -54,7 +54,7 @@ export default function Home() {
                     >
                         <span className="text-black text-2xl">&#x2193;</span>
                     </div>
-                    <div className="w-screen h-[100vw] bg-[#5E6A51] mt-[580px]">
+                    <div className="w-screen h-[150vw] bg-[#5E6A51] mt-[750px]">
                         <div
                             className="flex items-center justify-center text-center p-4"
                             style={{position: "relative", top: "100px"}}
@@ -68,19 +68,33 @@ export default function Home() {
                                 }
                             />
                         </div>
+
+
+                        <div className="w-full h-full flex flex-col items-center ">
+
+                            <div
+                                className="w-10 h-[250px]  mr-[82%] mt-[10%] grid grid-rows-2 gap-8">
+                                <span id="service-section"
+                                      className="text-sm text-white tracking-[5px] mt-[-50px] font-Outfit">Service</span>
+                                <SelectImages
+                                    imageSrc={"/noland.webp"}
+                                    topText="Configure your style"
+                                    bottomRightText="Find out more"
+                                />
+                            </div>
+
+                            <div
+                                className="w-10 h-[250px]  ml-[10%] mt-[20%] grid grid-rows-2 gap-8">
+                                <ImageAI
+                                    imageSrc={"/ai.jpg"}
+                                    topText="Find Fashion with AI"
+                                    bottomRightText="Find out more"
+                                />
+                            </div>
+
+
+                        </div>
                     </div>
-
-                    <div>
-                        <SelectImages
-                            imageSrc={"/noland.webp"}
-                            topText="Configure your style"
-                            bottomRightText="Find out more"
-                        />
-                    </div>
-
-
-
-
                 </div>
             </ScrollContext>
         </>

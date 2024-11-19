@@ -1,51 +1,66 @@
-import React, { useEffect } from 'react';
+"use client";
+import React, { useEffect, useRef } from 'react';
+import Image from 'next/image';
 import './imageComponentsStyles/ai.css';
 
-const AiImage = ({ imageSrc, topText, bottomRightText }) => {
+const ImageAI = ({ imageSrc, topText, bottomRightText }) => {
+    const imageContainerRef = useRef(null);
+    const circleRef = useRef(null);
+
     useEffect(() => {
-        const handleScroll = () => {
-            const imageContainer = document.querySelector('.image-container-ai');
-            const rect = imageContainer.getBoundingClientRect();
-            if (rect.top < window.innerHeight && rect.bottom >= 0) {
-                imageContainer.classList.add('visible');
-            } else {
-                imageContainer.classList.remove('visible');
-            }
-        };
+        const imageContainer = imageContainerRef.current;
+        const circle = document.querySelector('.circle');
+
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    } else if (window.scrollY === 0) {
+                        entry.target.classList.remove('visible');
+                    }
+                });
+            },
+            { threshold: 0.1 }
+        );
+
+        if (imageContainer) {
+            observer.observe(imageContainer);
+        }
 
         const handleMouseEnter = () => {
-            const circle = document.querySelector('.circle');
             if (circle) {
                 circle.classList.add('hover');
             }
         };
 
         const handleMouseLeave = () => {
-            const circle = document.querySelector('.circle');
             if (circle) {
                 circle.classList.remove('hover');
             }
         };
 
-        window.addEventListener('scroll', handleScroll);
-        const imageContainer = document.querySelector('.image-container-ai');
-        imageContainer.addEventListener('mouseenter', handleMouseEnter);
-        imageContainer.addEventListener('mouseleave', handleMouseLeave);
+        if (imageContainer) {
+            imageContainer.addEventListener('mouseenter', handleMouseEnter);
+            imageContainer.addEventListener('mouseleave', handleMouseLeave);
+        }
 
         return () => {
-            window.removeEventListener('scroll', handleScroll);
-            imageContainer.removeEventListener('mouseenter', handleMouseEnter);
-            imageContainer.removeEventListener('mouseleave', handleMouseLeave);
+            if (imageContainer) {
+                observer.unobserve(imageContainer);
+                imageContainer.removeEventListener('mouseenter', handleMouseEnter);
+                imageContainer.removeEventListener('mouseleave', handleMouseLeave);
+            }
         };
     }, []);
 
     return (
-        <div className="image-container-ai mt-[75%] ml-[1000px]">
-            <img src={imageSrc} alt="Selected Image" className="responsive-image" />
-            <div className="text-overlay top font-Outfit font-bold">{topText}</div>
-            <div className="text-overlay bottom-right font-Outfit">{bottomRightText}</div>
+        <div ref={imageContainerRef} className="image-container-ai">
+            <Image src={imageSrc} alt="Selected Image" className="responsive-image-ai select-none" layout="fill" objectFit="cover" />
+            <div className="text-overlay-ai top font-Outfit font-bold">{topText}</div>
+            <div className="text-overlay-ai bottom-right font-Outfit">{bottomRightText}</div>
         </div>
     );
 };
 
-export default AiImage;
+export default ImageAI;

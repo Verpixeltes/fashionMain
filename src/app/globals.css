@@ -23,33 +23,23 @@ body {
   background-size: cover; /* Ensure the image covers the entire background */
   background-position: center; /* Center the image */
   background-repeat: no-repeat;
+  -ms-overflow-style: none;  /* Internet Explorer 10+ */
+  scrollbar-width: none;  /* Firefox */
 
 
+}
+body::-webkit-scrollbar {
+  display: none;  /* Safari and Chrome */
 }
 
 html {
   overflow-x: hidden; /* Prevent horizontal scrolling */
 }
-/* Round scrollbar styles */
+
 ::-webkit-scrollbar {
-  width: 10px; /* Width of the scrollbar */
-  height: 10px; /* Height of the scrollbar for horizontal scrolling */
+  width: 0px;
+  background: transparent; /* make scrollbar transparent */
 }
-
-::-webkit-scrollbar-track {
-  background: #F4F0E5; /* Background color of the scrollbar track */
-  border-radius: 10px; /* Make track corners round */
-}
-
-::-webkit-scrollbar-thumb {
-  background: #888; /* Color of the scrollbar thumb */
-  border-radius: 10px; /* Make thumb corners round */
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #555; /* Darker color on hover */
-}
-
 /* Webkit-based browsers (Chrome, Safari, Edge) */
 
 
@@ -108,3 +98,4 @@ html {
   width: 60px; /* New size on hover */
   height: 60px; /* New size on hover */
 }
+

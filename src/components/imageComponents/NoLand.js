@@ -1,36 +1,48 @@
-import React, { useEffect } from 'react';
+"use client";
+import React, { useEffect, useRef } from 'react';
+import Image from 'next/image';
 import './imageComponentsStyles/NoLand.css';
 
 const SelectImages = ({ imageSrc, topText, bottomRightText }) => {
+    const imageContainerRef = useRef(null);
+    const circleRef = useRef(null);
+
     useEffect(() => {
-        const imageContainer = document.querySelector('.image-container');
+        const imageContainer = imageContainerRef.current;
+        const circle = document.querySelector('.circle');
 
         const observer = new IntersectionObserver(
             (entries) => {
                 entries.forEach((entry) => {
                     if (entry.isIntersecting) {
                         entry.target.classList.add('visible');
-                    } else {
+                    } else if (window.scrollY === 0) {
                         entry.target.classList.remove('visible');
                     }
                 });
             },
-            { threshold: 0.1 } // Adjust the threshold as needed
+            { threshold: 0.1 }
         );
 
         if (imageContainer) {
             observer.observe(imageContainer);
         }
 
+        const handleScroll = () => {
+            if (window.scrollY === 0 && imageContainer) {
+                imageContainer.classList.remove('visible');
+            }
+        };
+
+        window.addEventListener('scroll', handleScroll);
+
         const handleMouseEnter = () => {
-            const circle = document.querySelector('.circle');
             if (circle) {
                 circle.classList.add('hover');
             }
         };
 
         const handleMouseLeave = () => {
-            const circle = document.querySelector('.circle');
             if (circle) {
                 circle.classList.remove('hover');
             }
@@ -47,12 +59,12 @@ const SelectImages = ({ imageSrc, topText, bottomRightText }) => {
                 imageContainer.removeEventListener('mouseenter', handleMouseEnter);
                 imageContainer.removeEventListener('mouseleave', handleMouseLeave);
             }
+            window.removeEventListener('scroll', handleScroll);
         };
     }, []);
-
     return (
-        <div className="image-container mt-[70%] ml-20">
-            <img src={imageSrc} alt="Selected Image" className="responsive-image" />
+        <div ref={imageContainerRef} className="image-container">
+            <Image src={imageSrc} alt="Selected Image" className="responsive-image select-none" layout="fill" objectFit="cover" />
             <div className="text-overlay top font-Outfit font-bold">{topText}</div>
             <div className="text-overlay bottom-right font-Outfit">{bottomRightText}</div>
         </div>
