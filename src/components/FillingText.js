@@ -25,8 +25,8 @@ export default function FillingText({ text }) {
     return (
         <div className="flex flex-col items-center w-full px-4">
             {lines.map((line, index) => {
-                const startThreshold = index * 15;
-                const endThreshold = startThreshold + 15;
+                const startThreshold = index * 10;
+                const endThreshold = startThreshold + 10;
                 const progress = Math.min(
                     Math.max((scrollProgress - startThreshold) / (endThreshold - startThreshold), 0),
                     1

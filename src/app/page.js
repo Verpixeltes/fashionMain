@@ -77,6 +77,7 @@ export default function Home() {
                                 World is a Universe<br/>
                                 Let Us Be Your Guide to Discovering<br/>
                                 Your Style!</p>
+                            <p className={"text-[50vw] absolute ml-[50%] select-none mt-[-15%] text-[#F4F0E5] text-bold font-Outfit"}>*</p>
                             <div
                                 className="w-10 h-[250px]  mr-[82%] mt-[5%] grid grid-rows-2">
 
