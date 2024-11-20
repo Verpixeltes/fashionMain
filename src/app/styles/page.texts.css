@@ -1,0 +1,21 @@
+.title {
+    font-size: 10vw; /* Default size for large screens */
+    overflow-x: hidden;
+}
+@media (max-width: 1700px) {
+    .title {
+        font-size: 10vw; /* Smaller size for medium screens */
+    }
+}
+@media (max-width: 1200px) {
+    .title {
+        font-size: 11vw; /* Smaller size for medium screens */
+    }
+}
+
+@media (max-width: 768px) {
+    .title {
+        font-size: 11vw; /* Smaller size for small screens */
+    }
+}
+

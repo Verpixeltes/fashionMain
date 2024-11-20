@@ -13,7 +13,9 @@ export default function ScrollContext({ children }) {
     const [rafState, setRaf] = useState(null);
 
     useEffect(() => {
-        const scroller = new Lenis();
+        const scroller = new Lenis(
+            {
+        });
         let raf;
 
         function rafTime(time) {

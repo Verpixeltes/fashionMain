@@ -1,0 +1,48 @@
+.image-container-round {
+    position: absolute;
+    width: 28.5%;
+    height: 40%;
+    z-index: 10;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+.responsive-image-round {
+    object-fit: cover;
+    border-radius: 40px;
+    transition: transform 0.5s ease;
+}
+
+.image-container-round:hover .responsive-image {
+    transform: scale(1.05);
+}
+
+@keyframes slideInLeft {
+    from {
+        transform: translateX(-100%) rotate(-15deg);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0) rotate(0deg);
+        opacity: 1;
+    }
+}
+
+@keyframes slideInRight {
+    from {
+        transform: translateX(100%) rotate(15deg);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0) rotate(0deg);
+        opacity: 1;
+    }
+}
+
+.image-container-round.visible.slide-in-left {
+    animation: slideInLeft 0.8s forwards;
+}
+
+.image-container-round.visible.slide-in-right {
+    animation: slideInRight 0.8s forwards;
+}

@@ -52,3 +52,23 @@
 a:hover:after {
     width: 100%;
 }
+
+@media (max-width: 1350px) {
+    .navbar {
+        margin-left: 25%; /* Adjust the margin for medium screens */
+    }
+}
+@media (max-width: 1224px) {
+    .navbar {
+        margin-left: 24%; /* Adjust the margin for medium screens */
+    }
+}
+
+@media (max-width: 909px) {
+    .navbar {
+
+        margin-left: 10%; /* Reset the margin for small screens */
+    }
+}
+
+

@@ -22,18 +22,14 @@ body {
   background-image: url('/image.webp'); /* Update with your image path */
   background-size: cover; /* Ensure the image covers the entire background */
   background-position: center; /* Center the image */
-  background-repeat: no-repeat;
+  background-repeat: no-repeat; /* Internet Explorer 10+ */
   -ms-overflow-style: none;  /* Internet Explorer 10+ */
   scrollbar-width: none;  /* Firefox */
-
+  overflow-x: hidden;
 
 }
 body::-webkit-scrollbar {
   display: none;  /* Safari and Chrome */
-}
-
-html {
-  overflow-x: hidden; /* Prevent horizontal scrolling */
 }
 
 ::-webkit-scrollbar {
@@ -98,4 +94,5 @@ html {
   width: 60px; /* New size on hover */
   height: 60px; /* New size on hover */
 }
+
 
