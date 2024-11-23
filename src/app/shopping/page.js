@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from 'react';
-import { supabase } from "../lib/supabaseClient.js";
+import {supabase} from "@/app/lib/supabaseCLient";
 import './shoppingStyles.css';
 
 export default function YourPage() {
