@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState, useRef } from "react";
 import { useSearchParams } from "next/navigation";
-import { supabase } from "../lib/supabaseClient.js";
+import {supabase} from "@/app/lib/supabaseCLient";
 import Image from 'next/image';
 import "./articledetails.css";
 import OutfitDiv from "@/components/OutfitDiv";
