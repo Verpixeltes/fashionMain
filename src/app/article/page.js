@@ -1,12 +1,13 @@
 "use client";
+import { Suspense } from "react";
 import { useEffect, useState, useRef } from "react";
 import { useSearchParams } from "next/navigation";
-import {supabase} from "@/app/lib/supabaseCLient";
+import { supabase } from "@/app/lib/supabaseCLient";
 import Image from 'next/image';
 import "./articledetails.css";
 import OutfitDiv from "@/components/OutfitDiv";
 
-export default function ArticleDetails() {
+function ArticleDetails() {
     const searchParams = useSearchParams();
     const id = searchParams.get("id");
     const [article, setArticle] = useState(null);
@@ -232,5 +233,13 @@ export default function ArticleDetails() {
             </div>
             <OutfitDiv ref={outfitDivRef} />
         </div>
+    );
+}
+
+export default function ArticlePage() {
+    return (
+        <Suspense fallback={<div>Loading...</div>}>
+            <ArticleDetails />
+        </Suspense>
     );
 }
