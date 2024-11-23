@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
-import { supabase } from "../../lib/supabaseClient.js";
+import { supabase } from "../lib/supabaseCLient.js";
 import Image from 'next/image';
 import "./articledetails.css";
 

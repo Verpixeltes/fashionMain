@@ -60,7 +60,7 @@ export default function YourPage() {
     }, []);
 
     const handleArticleClick = (id) => {
-        window.location.href = `/shopping/article?id=${id}`;
+        window.location.href = `/article?id=${id}`;
     };
 
     return (
