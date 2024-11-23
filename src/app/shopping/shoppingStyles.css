@@ -1,0 +1,38 @@
+.article-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: 0.5s ease;
+}
+
+.article-container:hover {
+    cursor: pointer;
+    transform: scale(1.05);
+}
+
+.article-div {
+    position: relative;
+    height: 400px; /* Adjust height as needed */
+    width: 250px;
+    border-radius: 20px;
+    background-size: cover; /* Ensure the background image covers the entire div */
+    background-position: center; /* Center the background image */
+    border: solid 1px darkgray;
+}
+
+.text-container {
+    margin-top: 15px; /* Adjust this margin to move all texts together */
+    text-align: center;
+}
+
+.brand, .name, .price {
+    margin-top: -10%; /* Reduce margin to bring elements closer */
+    font-family: 'Outfit', sans-serif;
+}
+
+.articles-grid {
+    margin-left: 5%;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 100px; /* Reduce gap to bring articles closer */
+}

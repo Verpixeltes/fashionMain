@@ -1,23 +1,25 @@
 .image-container-ai {
     position: absolute;
-    width: 40%;
-    height: 60%;
-    z-index: 10; /* Ensure it is on top of other elements */
-    opacity: 0; /* Start with the image hidden */
+    margin-top: 25%;
+    margin-left: -4%;
+    width: 45%;
+    height: 60%;;
+    z-index: 10;
+    opacity: 0;
     transition: opacity 0.5s ease;
+
 }
 
 .responsive-image-ai {
     width: 100%;
     height: 100%;
-    object-fit: cover; /* Das Bild wird zugeschnitten, um den Container zu füllen */
+    object-fit: cover;
     border-radius: 40px;
     transition: transform 0.5s ease;
 }
 
 .image-container-ai:hover .responsive-image-ai {
-    transform: scale(1.05); /* Scale the image to 105% of its original size */
-    /* Smooth transition for the transform property */
+    transform: scale(1.05);
 }
 
 .text-overlay-ai {
@@ -41,16 +43,16 @@
 .text-overlay-ai.bottom-right:after {
     content: "";
     position: absolute;
-    background-color: white; /* Only white underline */
+    background-color: white;
     height: 3px;
-    width: 0; /* Set to 0 by default */
+    width: 0;
     left: 0;
     bottom: -1px;
-    transition: width 0.3s ease; /* Transition for width */
+    transition: width 0.3s ease;
 }
 
 .text-overlay-ai.bottom-right:hover:after {
-    width: 100%; /* Expand to 100% on hover */
+    width: 100%;
 }
 
 @keyframes slideInRotate-ai {
@@ -65,5 +67,15 @@
 }
 
 .image-container-ai.visible {
-    animation: slideInRotate-ai 0.8s forwards; /* Changed duration to 0.5s */
+    animation: slideInRotate-ai 0.8s forwards;
 }
+
+@media (max-width: 1536px) {
+    .image-container-ai {
+        width: 40%;
+        height: 53%;
+        margin-left: 0.4%;
+        margin-top: 25%;
+    }
+}
+

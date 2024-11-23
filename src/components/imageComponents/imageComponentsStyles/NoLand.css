@@ -1,7 +1,7 @@
 .image-container {
     position: absolute;
-    width: 40%;
-    height: 60%;
+    width: 45%;
+    height: 60%;;
     z-index: 10; /* Ensure it is on top of other elements */
     opacity: 0; /* Start with the image hidden */
     transition: opacity 0.5s ease;
@@ -63,4 +63,12 @@
 
 .image-container.visible {
     animation: slideInRotate 0.8s forwards; /* Changed duration to 0.5s */
+}
+
+@media (max-width: 1536px) {
+    .image-container {
+        width: 40%;
+        height: 53%;
+        margin-left: 0.4%;
+    }
 }

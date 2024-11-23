@@ -9,7 +9,9 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@radix-ui/react-accordion": "^1.2.1",
     "@studio-freight/lenis": "^1.0.42",
+    "@supabase/auth-helpers-nextjs": "^0.10.0",
     "flyonui": "^1.1.0",
     "framer-motion": "^11.11.17",
     "lenis": "^1.1.16",
@@ -20,6 +22,8 @@
     "three": "^0.170.0"
   },
   "devDependencies": {
+    "@types/node": "22.9.1",
+    "@types/react": "18.3.12",
     "eslint": "^8",
     "eslint-config-next": "15.0.3",
     "postcss": "^8",
