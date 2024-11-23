@@ -2,6 +2,9 @@
 import { useEffect, useState } from 'react';
 import {supabase} from "@/app/lib/supabaseCLient";
 import './shoppingStyles.css';
+import OutfitDiv from "@/components/OutfitDiv";
+
+// Add <OutfitDiv /> at the bottom of the component's return statement
 
 export default function YourPage() {
     const [articles, setArticles] = useState([]);
@@ -84,6 +87,8 @@ export default function YourPage() {
                     </div>
                 ))}
             </div>
+            <OutfitDiv />
         </div>
+
     );
 }
