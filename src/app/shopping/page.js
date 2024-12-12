@@ -1,12 +1,12 @@
 "use client";
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Fuse from 'fuse.js';
 import didYouMean from 'didyoumean2';
 import { supabase } from "../lib/supabaseCLient.js";
 import './shoppingStyles.css';
 
-export default function YourPage() {
+function YourPageContent() {
     const [articles, setArticles] = useState([]);
     const [types, setTypes] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
@@ -281,5 +281,13 @@ export default function YourPage() {
                 </div>
             ))}
         </div>
+    );
+}
+
+export default function YourPage() {
+    return (
+        <Suspense fallback={<div>Loading...</div>}>
+            <YourPageContent />
+        </Suspense>
     );
 }
