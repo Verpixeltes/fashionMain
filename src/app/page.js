@@ -53,7 +53,7 @@ export default function Home() {
                     <div className={`absolute bottom-5 left-1/2 transform -translate-x-1/2 w-12 h-12 bg-transparent border-solid border-black border-2 rounded-full flex items-center justify-center z-30 animate-bounce ${isAtTop ? "block" : "hidden"}`}>
                         <span className="text-black text-2xl">&#x2193;</span>
                     </div>
-                    <div className="w-full h-[210vh] bg-[#5E6A51] mt-[750px]">
+                    <div className="w-full h-[230vh] bg-[#5E6A51] mt-[750px]">
                         <div className="flex items-center justify-center text-center p-4 w-full" style={{ position: "relative", top: "100px" }}>
                             <FillingText text={"Unleash your unique style with our Fashion Configurator!\nFind perfect-fitting pieces for everyday looks or bold statements,\ntailored to express who you are. Start curating a wardrobe\nthat reflects your individuality with ease."} />
                         </div>

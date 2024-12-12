@@ -1,38 +1,98 @@
+/* Centered search input */
+.search-input {
+    display: block;
+    margin: 0 auto;
+    width: 50%;
+    padding: 15px;
+    font-size: 20px;
+    font-family: "Outfit", sans-serif;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    transition: all 0.5s ease;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* Moved-up search input */
+.search-initiated .search-input {
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, 0);
+    margin-top: 20px;
+}
+
+.articles-grid {
+    margin: 100px 100px 0; /* Combined margin-top and horizontal centering */
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); /* Adjusted min-width to 150px */
+    gap: 120px;
+    max-width: 1800px; /* Adjusted max-width to fit 6 columns */
+    padding: 0 5%;
+}
+
+/* Style for each article container */
 .article-container {
     display: flex;
     flex-direction: column;
     align-items: center;
     transition: 0.5s ease;
+    width: 100%;
+    max-width: 250px; /* Ensure articles have a max width */
 }
 
 .article-container:hover {
-    cursor: pointer;
     transform: scale(1.05);
 }
 
+/* Image styles for each article */
 .article-div {
     position: relative;
-    height: 400px; /* Adjust height as needed */
+    height: 400px;
     width: 250px;
     border-radius: 20px;
-    background-size: cover; /* Ensure the background image covers the entire div */
-    background-position: center; /* Center the background image */
+    background-size: cover;
+    background-position: center;
     border: solid 1px darkgray;
 }
 
+/* Styling for text under the image */
 .text-container {
-    margin-top: 15px; /* Adjust this margin to move all texts together */
+    margin-top: 15px;
     text-align: center;
 }
 
+/* Fonts for article texts */
 .brand, .name, .price {
-    margin-top: -10%; /* Reduce margin to bring elements closer */
+    margin-top: -10%;
     font-family: 'Outfit', sans-serif;
 }
 
-.articles-grid {
-    margin-left: 5%;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 100px; /* Reduce gap to bring articles closer */
+/* Show More Button */
+.show-more-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.show-more-button {
+    background: transparent;
+    border: 2px solid black;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: transform 0.3s, background-color 0.3s;
+}
+
+.show-more-button:hover {
+    transform: scale(1.1);
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive design adjustments */
+@media screen and (max-width: 768px) {
+    .articles-grid {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    }
 }

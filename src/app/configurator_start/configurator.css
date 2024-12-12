@@ -1,0 +1,24 @@
+.text-9xl {
+    font-size: 100px;
+
+}
+.rechteckig-rote-border {
+    width: 120px; /* Adjust width as needed */
+    height: 200px; /* Adjust height as needed */
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: solid 1px red;
+}
+
+span {
+    color: gray; /* Standardfarbe grau */
+    transition: color .3s ease; /* Sanfte Übergänge */
+    user-select: none;
+}
+
+span.active {
+    color: black; /* Farbe schwarz wenn aktiv */
+    font-size: 120px;
+}

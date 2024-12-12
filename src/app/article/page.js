@@ -2,11 +2,10 @@
 
 import { Suspense } from "react";
 import { useEffect, useState, useRef } from "react";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
 import { supabase } from "@/app/lib/supabaseCLient";
 import Image from 'next/image';
 import "./articledetails.css";
-import OutfitDiv from "@/components/OutfitDiv";
 
 function ArticleDetails() {
     const searchParams = useSearchParams();
@@ -17,8 +16,10 @@ function ArticleDetails() {
     const [ages, setAges] = useState([]);
     const [sizes, setSizes] = useState([]);
     const [materials, setMaterials] = useState([]);
+    const [mainColor, setMainColor] = useState(null);
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
-    const outfitDivRef = useRef();
+    const [selectedTab, setSelectedTab] = useState('product');
+    const router = useRouter();
 
     useEffect(() => {
         if (id) {
@@ -141,6 +142,23 @@ function ArticleDetails() {
                             setMaterials(materials.map(material => material.material_name));
                         }
                     }
+
+                    const { data: colorData, error: colorError } = await supabase
+                        .from("article_color")
+                        .select("color_name, hex_code")
+                        .eq("articleID", id)
+                        .eq("main_color", true)
+                        .single();
+
+                    if (colorError) {
+                        if (colorError.code === 'PGRST116') {
+                            console.log("No main color found for this article.");
+                        } else {
+                            console.error("Error fetching main color:", colorError);
+                        }
+                    } else {
+                        setMainColor(colorData);
+                    }
                 } catch (error) {
                     console.error("Unexpected error:", error);
                 }
@@ -162,14 +180,13 @@ function ArticleDetails() {
         );
     };
 
-    const handleAddToOutfit = () => {
-        if (images.length > 0 && outfitDivRef.current) {
-            const mainCoverImage = images.find(image => image.main_cover === true);
-            if (mainCoverImage) {
-                outfitDivRef.current.addImageToOutfit(mainCoverImage.image_url, article.articleID, article.price);
-            } else {
-                console.log("No main cover image found");
-            }
+    const handleImageClick = (index) => {
+        setCurrentImageIndex(index);
+    };
+
+    const handleBrandClick = () => {
+        if (article && article.brand) {
+            router.push(`/shopping?brand=${article.brand.brand_name}`);
         }
     };
 
@@ -191,6 +208,19 @@ function ArticleDetails() {
                         />
                         <div className="arrow left" onClick={handlePreviousImage}></div>
                         <div className="arrow right" onClick={handleNextImage}></div>
+                        <div className="thumbnails-container">
+                            {images.map((image, index) => (
+                                <Image
+                                    key={index}
+                                    className={`thumbnail ${index === currentImageIndex ? 'active' : ''}`}
+                                    src={image.image_url}
+                                    alt={`Thumbnail ${index + 1}`}
+                                    width={80} // Set the desired width for thumbnails
+                                    height={80} // Set the desired height for thumbnails
+                                    onClick={() => handleImageClick(index)}
+                                />
+                            ))}
+                        </div>
                     </>
                 ) : (
                     <div className="article-image-placeholder">
@@ -198,41 +228,40 @@ function ArticleDetails() {
                     </div>
                 )}
             </div>
-
             <div className="article-info">
-                <p className="brand font-AudioNugget">
+                <p className="brand font-AudioNugget" onClick={handleBrandClick} style={{ cursor: 'pointer', textDecoration: 'underline' }}>
                     {article.brand?.brand_name || "No brand available"}
                 </p>
-                <p className="name font-AudioNugget">
-                    {article.name || "No name available"}
-                </p>
-                <p className="price font-AudioNugget">Price: {article.price}€</p>
-                <p className="form font-AudioNugget">
-                    Form: {article.form?.form_name || "No form available"}
-                </p>
-                <p className="type font-AudioNugget">
-                    Type: {article.type?.type_name || "No type available"}
-                </p>
-                <p className="styles font-AudioNugget">
-                    Styles: {styles.length > 0 ? styles.join(", ") : "loading.."}
-                </p>
-                <p className="ages font-AudioNugget">
-                    Ages: {ages.length > 0 ? ages.join(", ") : "loading.."}
-                </p>
-                <p className="sizes font-AudioNugget">
-                    Sizes: {sizes.length > 0 ? sizes.join(", ") : "loading.."}
-                </p>
-                <p className="materials font-AudioNugget">
-                    Materials: {materials.length > 0 ? materials.join(", ") : "loading.."}
-                </p>
-                <p className={"transfer-to-brand"}>
-                    Go to product &rarr;
-                </p>
-                <p className={"transfer-to-brand"} onClick={handleAddToOutfit}>
-                    Add to outfit &rarr;
+                <p className="name font-AudioNugget">{article.name || "No name available"}</p>
+                <p className="price font-AudioNugget">{article.price}€</p>
+                <div className="tabs">
+                    <span className={`tab ${selectedTab === 'product' ? 'active' : ''}`} onClick={() => setSelectedTab('product')}>Product Information</span>
+                    <span className={`tab ${selectedTab === 'general' ? 'active' : ''}`} onClick={() => setSelectedTab('general')}>General Information</span>
+                </div>
+                {selectedTab === 'product' && (
+                    <div className="info-content">
+                        <p className="info-text">Form: {article.form?.form_name || "No form available"}</p>
+                        <p className="info-text">Type: {article.type?.type_name || "No type available"}</p>
+                        <p className="info-text">Sizes: {sizes.length > 0 ? sizes.join(", ") : "No sizes available"}</p>
+                        <p className="info-text">Materials: {materials.length > 0 ? materials.join(", ") : "No materials available"}</p>
+                        {mainColor && (
+                            <>
+                                <p className="info-text">Color: {mainColor.color_name}</p>
+                                <div className="color-circle" style={{ backgroundColor: mainColor.hex_code }}></div>
+                            </>
+                        )}
+                    </div>
+                )}
+                {selectedTab === 'general' && (
+                    <div className="info-content">
+                        <p className="info-text">Styles: {styles.length > 0 ? styles.join(", ") : "loading.."}</p>
+                        <p className="info-text">Ages: {ages.length > 0 ? ages.join(", ") : "loading.."}</p>
+                    </div>
+                )}
+                <p className="go-to-product">
+                    Go to product
                 </p>
             </div>
-            <OutfitDiv ref={outfitDivRef} />
         </div>
     );
 }
