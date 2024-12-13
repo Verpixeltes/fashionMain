@@ -3,7 +3,7 @@ import React, { useEffect, useState, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Fuse from 'fuse.js';
 import didYouMean from 'didyoumean2';
-import { supabase } from "../lib/supabaseClient.js";
+import {supabase} from "@/app/lib/supabaseCLient";
 import './shoppingStyles.css';
 
 function YourPageContent() {
