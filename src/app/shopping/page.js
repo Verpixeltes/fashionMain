@@ -3,7 +3,7 @@ import React, { useEffect, useState, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Fuse from 'fuse.js';
 import didYouMean from 'didyoumean2';
-import {supabase} from "@/app/lib/supabaseCLient";
+import { supabase } from "@/app/lib/supabaseClient";
 import './shoppingStyles.css';
 
 function YourPageContent() {
@@ -239,7 +239,12 @@ function YourPageContent() {
                 onKeyPress={handleKeyPress}
                 className="search-input"
             />
-            {searchInitiated && types.map((type) => (
+            {searchInitiated && filteredArticles.length === 0 && (
+                <div className="no-articles-message">
+                    Sorry, but we can't find anything for you.
+                </div>
+            )}
+            {searchInitiated && filteredArticles.length > 0 && types.map((type) => (
                 <div key={type} style={{ display: expandedTypes[type] || !Object.values(expandedTypes).includes(true) ? 'block' : 'none' }}>
                     <h2 className="category-title">{type}</h2>
                     <div className="articles-grid">
