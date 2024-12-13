@@ -21,107 +21,99 @@ function YourPageContent() {
             try {
                 const { data: articlesData, error: articlesError } = await supabase
                     .from('article')
-                    .select(`
-                        articleID,
-                        name,
-                        url,
-                        price,
-                        brand (brand_name),
-                        type,
-                        form (form_name),
-                        article_style (styleID),
-                        article_age (ageID),
-                        article_size (sizeID),
-                        article_material (materialID)
-                    `);
+                    .select(`articleID, name, url, price, brand (brand_name), type, form (form_name), article_style (styleID), article_age (ageID), article_size (sizeID), article_material (materialID)`);
 
                 if (articlesError) {
-                    console.error('Error fetching articles:', articlesError);
+                    console.error('Error fetching articles:', articlesError.message || articlesError);
                     return;
                 }
 
                 const articlesWithDetails = await Promise.all(
                     articlesData.map(async (article) => {
-                        const { data: typeData, error: typeError } = await supabase
-                            .from('type')
-                            .select('type_name')
-                            .eq('type_id', article.type)
-                            .single();
+                        try {
+                            const { data: typeData, error: typeError } = await supabase
+                                .from('type')
+                                .select('type_name')
+                                .eq('type_id', article.type)
+                                .single();
 
-                        if (typeError) {
-                            console.error(`Error fetching type for article ${article.articleID}:`, typeError.message);
+                            if (typeError) {
+                                console.error(`Error fetching type for article ${article.articleID}:`, typeError.message);
+                            }
+
+                            const { data: imageData, error: imageError } = await supabase
+                                .from('article_images')
+                                .select('image_url')
+                                .eq('articleID', article.articleID)
+                                .eq('main_cover', true)
+                                .limit(1);
+
+                            if (imageError) {
+                                console.error(`Error fetching image for article ${article.articleID}:`, imageError.message);
+                            }
+
+                            const imageUrl = imageData && imageData.length > 0
+                                ? imageData[0].image_url
+                                : '/path/to/default-image.jpg';
+
+                            const { data: styleData, error: styleError } = await supabase
+                                .from('styles')
+                                .select('style_name')
+                                .in('style_id', article.article_style.map(style => style.styleID));
+
+                            if (styleError) {
+                                console.error(`Error fetching styles for article ${article.articleID}:`, styleError.message);
+                            }
+
+                            const { data: ageData, error: ageError } = await supabase
+                                .from('age')
+                                .select('age_class')
+                                .in('age_id', article.article_age.map(age => age.ageID));
+
+                            if (ageError) {
+                                console.error(`Error fetching ages for article ${article.articleID}:`, ageError.message);
+                            }
+
+                            const { data: sizeData, error: sizeError } = await supabase
+                                .from('size')
+                                .select('size_name')
+                                .in('size_id', article.article_size.map(size => size.sizeID));
+
+                            if (sizeError) {
+                                console.error(`Error fetching sizes for article ${article.articleID}:`, sizeError.message);
+                            }
+
+                            const { data: materialData, error: materialError } = await supabase
+                                .from('material')
+                                .select('material_name')
+                                .in('material_id', article.article_material.map(material => material.materialID));
+
+                            if (materialError) {
+                                console.error(`Error fetching materials for article ${article.articleID}:`, materialError.message);
+                            }
+
+                            const { data: colorData, error: colorError } = await supabase
+                                .from('article_color')
+                                .select('color_name, color_percentage')
+                                .eq('articleID', article.articleID);
+
+                            if (colorError) {
+                                console.error(`Error fetching colors for article ${article.articleID}:`, colorError.message);
+                            }
+
+                            return {
+                                ...article,
+                                type: typeData ? typeData.type_name : 'Unknown',
+                                image_url: imageUrl,
+                                styles: styleData ? styleData.map(style => style.style_name) : [],
+                                ages: ageData ? ageData.map(age => age.age_class) : [],
+                                sizes: sizeData ? sizeData.map(size => size.size_name) : [],
+                                materials: materialData ? materialData.map(material => material.material_name) : [],
+                                colors: colorData ? colorData.map(color => ({ name: color.color_name, percentage: color.color_percentage })) : []
+                            };
+                        } catch (error) {
+                            console.error(`Error processing article ${article.articleID}:`, error);
                         }
-
-                        const { data: imageData, error: imageError } = await supabase
-                            .from('article_images')
-                            .select('image_url')
-                            .eq('articleID', article.articleID)
-                            .eq('main_cover', true)
-                            .limit(1);
-
-                        if (imageError) {
-                            console.error(`Error fetching image for article ${article.articleID}:`, imageError.message);
-                        }
-
-                        const imageUrl = imageData && imageData.length > 0
-                            ? imageData[0].image_url
-                            : '/path/to/default-image.jpg'; // Ensure this path is correct
-
-                        const { data: styleData, error: styleError } = await supabase
-                            .from('styles')
-                            .select('style_name')
-                            .in('style_id', article.article_style.map(style => style.styleID));
-
-                        if (styleError) {
-                            console.error(`Error fetching styles for article ${article.articleID}:`, styleError.message);
-                        }
-
-                        const { data: ageData, error: ageError } = await supabase
-                            .from('age')
-                            .select('age_class')
-                            .in('age_id', article.article_age.map(age => age.ageID));
-
-                        if (ageError) {
-                            console.error(`Error fetching ages for article ${article.articleID}:`, ageError.message);
-                        }
-
-                        const { data: sizeData, error: sizeError } = await supabase
-                            .from('size')
-                            .select('size_name')
-                            .in('size_id', article.article_size.map(size => size.sizeID));
-
-                        if (sizeError) {
-                            console.error(`Error fetching sizes for article ${article.articleID}:`, sizeError.message);
-                        }
-
-                        const { data: materialData, error: materialError } = await supabase
-                            .from('material')
-                            .select('material_name')
-                            .in('material_id', article.article_material.map(material => material.materialID));
-
-                        if (materialError) {
-                            console.error(`Error fetching materials for article ${article.articleID}:`, materialError.message);
-                        }
-
-                        const { data: colorData, error: colorError } = await supabase
-                            .from('article_color')
-                            .select('color_name, color_percentage')
-                            .eq('articleID', article.articleID);
-
-                        if (colorError) {
-                            console.error(`Error fetching colors for article ${article.articleID}:`, colorError.message);
-                        }
-
-                        return {
-                            ...article,
-                            type: typeData ? typeData.type_name : 'Unknown',
-                            image_url: imageUrl,
-                            styles: styleData ? styleData.map(style => style.style_name) : [],
-                            ages: ageData ? ageData.map(age => age.age_class) : [],
-                            sizes: sizeData ? sizeData.map(size => size.size_name) : [],
-                            materials: materialData ? materialData.map(material => material.material_name) : [],
-                            colors: colorData ? colorData.map(color => ({ name: color.color_name, percentage: color.color_percentage })) : []
-                        };
                     })
                 );
 
